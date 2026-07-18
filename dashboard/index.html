@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fleet Platform</title>
+<style>
+  :root {
+    --bg: #070b14; --panel: #0f1726; --border: #1e293b;
+    --accent: #06b6d4; --accent-dim: #0e7490;
+    --text: #e2e8f0; --dim: #64748b;
+    --ok: #10b981; --warn: #f59e0b; --crit: #ef4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+  h1 { font-size: 1.5rem; margin-bottom: 4px; }
+  .subtitle { color: var(--dim); font-size: 0.875rem; margin-bottom: 24px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px; transition: border-color 0.15s;
+  }
+  .card:hover { border-color: var(--accent-dim); }
+  .card-title { font-size: 1rem; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .card-desc { color: var(--dim); font-size: 0.8rem; margin-bottom: 12px; }
+  .card-link { color: var(--accent); text-decoration: none; font-size: 0.8rem; }
+  .card-stats { display: flex; gap: 16px; margin-top: 12px; font-size: 0.75rem; color: var(--dim); }
+  .card-stats span strong { color: var(--text); }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .status-dot.ok { background: var(--ok); }
+  .status-dot.warn { background: var(--warn); }
+  .status-dot.down { background: var(--crit); }
+  .section { margin-bottom: 32px; }
+  .section-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 12px; }
+  .api-key { font-family: monospace; font-size: 0.75rem; color: var(--accent); background: rgba(6,182,212,0.05); padding: 2px 6px; border-radius: 4px; }
+  .api-list { font-size: 0.75rem; color: var(--dim); margin-top: 8px; }
+  .api-list code { color: var(--accent); }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<h1>🚢 Fleet Platform</h1>
+<div class="subtitle">SuperInstance Agency Tools — OracleClaw 24/7 Cloud Infrastructure</div>
+
+<div class="section">
+  <div class="section-title">📡 Live Services</div>
+  <div class="grid" id="services-grid">
+
+    <div class="card">
+      <div class="card-title">🌐 Fleet API Gateway</div>
+      <div class="card-desc">Single entry point for all agency data. Sessions, captures, training labels, search, brief.</div>
+      <div class="api-list">
+        <code>GET /stats</code> · <code>GET /brief</code> · <code>GET /search?q=</code><br>
+        <code>POST /sessions</code> · <code>POST /captures</code> · <code>POST /training-labels</code><br>
+        <code>POST /weather/ingest</code> · <code>POST /catch</code> · <code>GET /health</code>
+      </div>
+      <div class="card-stats">
+        <a href="https://api.fleet.superinstance.ai/stats">→ API Stats</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🌦️ Fleet Weather</div>
+      <div class="card-desc">Marine weather proxy + cache. NWS forecasts + NOAA tides. OracleClaw injects hourly.</div>
+      <div class="card-stats">
+        <a href="https://weather.superinstance.ai/health">→ Health</a>
+        <span>· hourly cron</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎙️ ActiveLog</div>
+      <div class="card-desc">Essential domain-agnostic voice transcriber. Time + location annotations. Offline-first.</div>
+      <div class="card-stats">
+        <a href="https://github.com/SuperInstance/activelog-app">→ GitHub</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🐟 FishingLog.Ai</div>
+      <div class="card-desc">Marine extension. Vessel NMEA, vocabulary feedback, camera deployment, catch linking.</div>
+      <div class="card-stats">
+        <a href="https://github.com/SuperInstance/fishinglog-ai">→ GitHub</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🧩 Polyformalism A2A</div>
+      <div class="card-desc">9-channel intent protocol for multi-agent alignment. Every fleet message tagged with intent vectors.</div>
+      <div class="card-stats">
+        <a href="https://github.com/SuperInstance/polyformalism-a2a-js">→ GitHub</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Ship Log Search</div>
+      <div class="card-desc">D1 + Vectorize logbook. Semantic + spatial + timeline search across all vessel data.</div>
+      <div class="card-stats">
+        <a href="https://ship-log-search.casey-digennaro.workers.dev">→ Open</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">🤖 Agent Directory</div>
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">🔮 OracleClaw</div>
+      <div class="card-desc">The cloud position. 24/7 uptime, unlimited internet. Weather injection, morning brief, narrator analysis. Runs while the boat sleeps.</div>
+      <div class="card-stats">
+        <span class="status-dot ok"></span> <span>Active</span>
+        <span>· Model: GLM-5.2</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🦀 Hermes Agent</div>
+      <div class="card-desc">Boots on the ground. Nav computer. Sounder captures, bathy data, prior track lines. Stream alignment + gap detection.</div>
+      <div class="card-stats">
+        <span class="status-dot ok"></span> <span>On vessel (EILEEN)</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">👁️ TZ-Pro Agent</div>
+      <div class="card-desc">The vessel nervous system. Capture daemon, analyzer.py, vocabulary module, alerts. 21K+ blobs catalogued.</div>
+      <div class="card-stats">
+        <span class="status-dot ok"></span> <span>On vessel (EILEEN)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">📚 Repositories</div>
+  <div class="grid">
+    <div class="card">
+      <div class="card-title"> activelog-app</div>
+      <div class="card-desc">Essential core transcriber</div>
+      <a class="card-link" href="https://github.com/SuperInstance/activelog-app">→ GitHub</a>
+    </div>
+    <div class="card">
+      <div class="card-title"> fishinglog-ai</div>
+      <div class="card-desc">Marine extension</div>
+      <a class="card-link" href="https://github.com/SuperInstance/fishinglog-ai">→ GitHub</a>
+    </div>
+    <div class="card">
+      <div class="card-title"> activelog-ai</div>
+      <div class="card-desc">Integration docs + Hermes onboarding</div>
+      <a class="card-link" href="https://github.com/SuperInstance/activelog-ai">→ GitHub</a>
+    </div>
+    <div class="card">
+      <div class="card-title"> fleet-weather</div>
+      <div class="card-desc">Weather proxy worker</div>
+      <a class="card-link" href="https://github.com/SuperInstance/fleet-weather">→ GitHub</a>
+    </div>
+    <div class="card">
+      <div class="card-title"> tzpro-agent</div>
+      <div class="card-desc">Vessel nervous system</div>
+      <a class="card-link" href="https://github.com/SuperInstance/tzpro-agent">→ GitHub</a>
+    </div>
+    <div class="card">
+      <div class="card-title"> ship-log-modules</div>
+      <div class="card-desc">13 vessel modules + Vessel Quest</div>
+      <a class="card-link" href="https://github.com/SuperInstance/ship-log-modules">→ GitHub</a>
+    </div>
+    <div class="card">
+      <div class="card-title"> polyformalism-a2a-js</div>
+      <div class="card-desc">9-channel agent communication</div>
+      <a class="card-link" href="https://github.com/SuperInstance/polyformalism-a2a-js">→ GitHub</a>
+    </div>
+    <div class="card">
+      <div class="card-title"> fleet-platform</div>
+      <div class="card-desc">This dashboard + deploy scripts</div>
+      <a class="card-link" href="https://github.com/SuperInstance/fleet-platform">→ GitHub</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// Fetch live stats
+fetch('https://api.fleet.superinstance.ai/stats')
+  .then(r => r.json())
+  .then(data => {
+    // Could update cards with live data
+    console.log('Fleet stats:', data);
+  })
+  .catch(() => {});
+</script>
+</body>
+</html>

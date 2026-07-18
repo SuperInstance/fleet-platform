@@ -1,0 +1,24 @@
+name = "fleet-gateway"
+main = "src/index.ts"
+compatibility_date = "2026-07-18"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "fleet-data"
+database_id = "placeholder"
+
+[[vectorize]]
+binding = "VECTORIZE"
+index_name = "fleet-embeddings"
+dimensions = 384
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "placeholder"
+
+[ai]
+binding = "AI"
+
+routes = [
+  { pattern = "api.fleet.superinstance.ai/*", zone_name = "superinstance.ai" }
+]
