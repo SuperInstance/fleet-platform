@@ -375,7 +375,7 @@ async function handlePull(request: Request, env: Env): Promise<any> {
   const narrator = await env.DB.prepare(
     `SELECT id, title, started_at, ended_at, raw_markdown, tags, word_count
        FROM sessions
-      WHERE domain = 'narrator' AND created_at > ?
+      WHERE domain = 'narrator' AND started_at > ?
    ORDER BY created_at ASC
       LIMIT ?`,
   ).bind(since, limits.narrator).all();

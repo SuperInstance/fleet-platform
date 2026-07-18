@@ -52,7 +52,8 @@ export default {
 
       // ── Sessions ──────────────────────────────────────────
       if (path === '/sessions' && method === 'GET') {
-        const limit = Math.min(100, parseInt(url.searchParams.get('limit') || '50'));
+        const parsedLimit = parseInt(url.searchParams.get('limit') || '50');
+        const limit = Math.min(100, Number.isFinite(parsedLimit) ? parsedLimit : 50);
         const results = await env.DB.prepare(
           'SELECT id, title, started_at, ended_at, annotation_count, word_count, tags, domain FROM sessions ORDER BY started_at DESC LIMIT ?'
         ).bind(limit).all();
