@@ -1,0 +1,44 @@
+name = "fleet-sync"
+main = "src/index.ts"
+compatibility_date = "2026-07-18"
+compatibility_flags = ["nodejs_compat"]
+
+# ── D1: shared fleet database ──────────────────────────────
+# Reads + writes to captures, sessions, observations, catch_labels,
+# training_labels, a2a_messages, weather_log.
+[[d1_databases]]
+binding = "DB"
+database_name = "fleet-data"
+database_id = "placeholder"
+migrations_dir = "../../schema/migrations"
+
+# ── R2: echogram PNGs ──────────────────────────────────────
+# Key shape: captures/{capture_id}.png
+# Cached immutable; referenced from captures.png_r2_key.
+[[r2_buckets]]
+binding = "ECHOGRAMS"
+bucket_name = "fleet-echograms"
+
+# ── KV: per-device sync state ─────────────────────────────
+# Key shape: sync:device:{device_id}
+# Value: { last_sync, pushed_count, pulled_count, last_sync_id, last_*_breakdown }
+[[kv_namespaces]]
+binding = "SYNC_STATE"
+id = "placeholder"
+
+# ── Vars ───────────────────────────────────────────────────
+[vars]
+DEVICE_DEFAULT     = "EILEEN"
+INSERT_BATCH_SIZE  = "50"
+MAX_PNG_BYTES      = "10485760"   # 10 MB per PNG
+PULL_WEATHER_LIMIT = "500"
+PULL_NARRATOR_LIMIT = "200"
+PULL_TRAINING_LIMIT = "200"
+PULL_A2A_LIMIT     = "500"
+
+# ── Routes (optional direct access) ───────────────────────
+# The boat typically calls a custom sync subdomain over HTTPS.
+# Drop the routes block to deploy purely behind fleet-gateway.
+routes = [
+  { pattern = "sync.fleet.superinstance.ai/*", zone_name = "superinstance.ai" }
+]

@@ -1,0 +1,33 @@
+name = "fleet-vision"
+main = "src/index.ts"
+compatibility_date = "2026-07-18"
+compatibility_flags = ["nodejs_compat"]
+
+# ── D1: shared fleet database ──────────────────────────────
+# Vision writes species/confidence back to captures table.
+[[d1_databases]]
+binding = "DB"
+database_name = "fleet-data"
+database_id = "placeholder"
+
+# ── R2: echogram PNGs ──────────────────────────────────────
+# Same bucket as fleet-sync writes to.
+[[r2_buckets]]
+binding = "ECHOGRAMS"
+bucket_name = "fleet-echograms"
+
+# ── Workers AI ─────────────────────────────────────────────
+# Image classification + LLM for caption generation.
+[ai]
+binding = "AI"
+
+# ── Cron: 23:00 UTC nightly ────────────────────────────────
+# After narrator (22:00), before morning brief (03:00).
+# Analyzes up to 30 unanalyzed captures per run.
+[triggers]
+crons = ["0 23 * * *"]
+
+# ── Routes ─────────────────────────────────────────────────
+routes = [
+  { pattern = "vision.fleet.superinstance.ai/*", zone_name = "superinstance.ai" }
+]

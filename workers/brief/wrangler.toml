@@ -1,0 +1,29 @@
+name = "fleet-morning-brief"
+main = "src/index.ts"
+compatibility_date = "2026-07-18"
+
+# Daily 03:00 UTC — before Casey wakes at 04:00
+[triggers]
+crons = ["0 3 * * *"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "fleet-data"
+database_id = "placeholder"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "placeholder"
+
+[[r2_buckets]]
+binding = "BRIEFS"
+bucket_name = "fleet-briefs"
+
+[ai]
+binding = "AI"
+
+# Routes are optional — most calls are scheduled cron + internal API
+# Uncomment and set when wiring up to the gateway
+# routes = [
+#   { pattern = "brief.fleet.superinstance.ai/*", zone_name = "superinstance.ai" }
+# ]

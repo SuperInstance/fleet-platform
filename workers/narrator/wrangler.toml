@@ -1,0 +1,45 @@
+name = "fleet-narrator"
+main = "src/index.ts"
+compatibility_date = "2026-07-18"
+compatibility_flags = ["nodejs_compat"]
+
+# ── D1: shared fleet database ──────────────────────────────
+# Narrator reads from the same DB the gateway writes to.
+# Tables: narrator_reports, caption_gaps, caption_suggestions,
+#         plus reads from captures / annotations / training_labels.
+[[d1_databases]]
+binding = "DB"
+database_name = "fleet-data"
+database_id = "placeholder"
+migrations_dir = "../../schema/migrations"
+
+# ── Workers AI ─────────────────────────────────────────────
+# Used for:
+#   - Embedding aligned (machine_caption, captain_text) pairs to compute
+#     semantic alignment scores (cosine similarity).
+#   - Generating natural-language suggestions for top-severity gaps.
+[ai]
+binding = "AI"
+
+# ── Cron: 22:00 UTC nightly ────────────────────────────────
+# Runs the day-of caption gap analysis.
+# Produces: 1 narrator_report row, N caption_gaps, N caption_suggestions.
+[triggers]
+crons = ["0 22 * * *"]
+
+# ── Routes ─────────────────────────────────────────────────
+# Direct access for debugging / dashboard. In production the
+# fleet-gateway worker proxies most reads; this Worker exposes
+# its own endpoints for testing and cron-triggered analysis.
+routes = [
+  { pattern = "narrator.fleet.superinstance.ai/*", zone_name = "superinstance.ai" }
+]
+
+# ── Vars ───────────────────────────────────────────────────
+[vars]
+EMBEDDING_MODEL   = "@cf/baai/bge-small-en-v1.5"
+LLM_MODEL         = "@cf/meta/llama-3.1-8b-instruct"
+MAX_SUGGESTIONS   = "25"
+ALIGN_WINDOW_SEC  = "30"
+MIN_GAP_SUPPORT   = "2"        # a gap needs >= this many aligned pairs
+STOPWORD_LANGUAGE = "en"
