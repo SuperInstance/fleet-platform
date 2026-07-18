@@ -9,7 +9,7 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "DB"
 database_name = "fleet-data"
-database_id = "placeholder"
+database_id = "37f14cd0-53d4-4c98-90e2-8a6175031728"
 migrations_dir = "../../schema/migrations"
 
 # ── R2: echogram PNGs ──────────────────────────────────────
@@ -24,7 +24,7 @@ bucket_name = "fleet-echograms"
 # Value: { last_sync, pushed_count, pulled_count, last_sync_id, last_*_breakdown }
 [[kv_namespaces]]
 binding = "SYNC_STATE"
-id = "placeholder"
+id = "0241ed3031534da6a8d844ad88094e99"
 
 # ── Vars ───────────────────────────────────────────────────
 [vars]

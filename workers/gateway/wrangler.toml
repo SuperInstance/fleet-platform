@@ -5,7 +5,7 @@ compatibility_date = "2026-07-18"
 [[d1_databases]]
 binding = "DB"
 database_name = "fleet-data"
-database_id = "placeholder"
+database_id = "37f14cd0-53d4-4c98-90e2-8a6175031728"
 
 [[vectorize]]
 binding = "VECTORIZE"
@@ -14,7 +14,7 @@ dimensions = 384
 
 [[kv_namespaces]]
 binding = "CACHE"
-id = "placeholder"
+id = "76094ed27a6447d1bf5627bf33e71fb9"
 
 [ai]
 binding = "AI"

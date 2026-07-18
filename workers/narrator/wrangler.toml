@@ -10,7 +10,7 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "DB"
 database_name = "fleet-data"
-database_id = "placeholder"
+database_id = "37f14cd0-53d4-4c98-90e2-8a6175031728"
 migrations_dir = "../../schema/migrations"
 
 # ── Workers AI ─────────────────────────────────────────────
